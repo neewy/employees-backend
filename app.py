@@ -1,3 +1,4 @@
+import os
 from injector import Module, Injector, inject, singleton
 from postgres_module import PostgresModule, KeyValue
 from flask import Flask, Request
@@ -51,6 +52,8 @@ def main():
     api = Api(app)
     CORS(app)
 
+    app.config.from_object(os.environ['APP_SETTINGS'])
+    print(os.environ['APP_SETTINGS'])
     app.config.update(DB_CONNECTION_STRING=':memory:', SQLALCHEMY_DATABASE_URI='sqlite://')
     app.debug = True
 
